@@ -19,7 +19,7 @@ import logo_icon from '../Assets/logo.png';
 const LoveCast = () => {
   let api_key = "04f96754619cfa5f4f575c7e848c226c";
 
-  const [isDay, setIsDay] = useState(true); // Default to day
+  const [isDay, setIsDay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const getTimeZone = async (latitude, longitude, timestamp) => {
@@ -51,13 +51,9 @@ const LoveCast = () => {
       let data = await response.json();
       console.log("API Response:", data);
 
-      const humidity = document.getElementsByClassName("humidity-percent");
-      const wind = document.getElementsByClassName("wind-speed");
       const temperature = document.getElementsByClassName("weather-temp");
       const location = document.getElementsByClassName("weather-location");
 
-      humidity[0].innerHTML = data.main.humidity + " %";
-      wind[0].innerHTML = data.wind.speed + " km/h";
       temperature[0].innerHTML = data.main.temp + "°c";
       location[0].innerHTML = data.name;
 
@@ -179,25 +175,12 @@ const LoveCast = () => {
         </div>
         <div className='weather-temp'>56°c</div>
         <div className='weather-location'>Los Angeles</div>
-        <div className='data-container'>
-          <div className='element'>
-            <img src={humidity_icon} alt="" className="icon" />
-            <div className="data">
-              <div className='humidity-percent'>82%</div>
-              <div className='text'>Humidity</div>
-            </div>
-          </div>
-          <div className='element'>
-            <img src={wind_icon} alt="" className="icon" />
-            <div className="data">
-              <div className='wind-speed'>2km/h</div>
-              <div className='text'>Wind Speed</div>
-            </div>
-          </div>
-        </div>
+        {/* Removed data-container */}
       </div>
       <div id="second-container" className="container">
-        {/* Content for the right container */}
+        {
+          <p style={{ color: '#FFFFFF' }}>Love Cast:</p>
+        }
       </div>
     </div>
   );

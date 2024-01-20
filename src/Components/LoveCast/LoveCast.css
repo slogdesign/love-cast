@@ -18,7 +18,7 @@ html {
     repeat-y, repeat-y, repeat-y, repeat-y,
     repeat-y, repeat-y, repeat-y, repeat-y;
   animation: moveClouds 20s linear infinite;
-  background-size:100% ;
+  background-size: 100%;
 }
 
 @keyframes moveClouds {
@@ -37,6 +37,7 @@ html {
 body {
   margin: 0;
   padding: 0;
+  font-size: 16px; /* Set a base font size for better responsiveness */
 }
 
 .container-wrapper {
@@ -46,23 +47,24 @@ body {
 
 .container {
   position: relative;
-  width: 45%; /* Adjusted container width */
-  height: 80vh;
+  width: 50%; /* Adjust the width as needed */
+  min-width: 300px; /* Set a minimum width to prevent it from becoming too narrow */
+  max-width: 500px; /* Set a maximum width if you want to limit the width */
   margin: auto;
-  margin-top: 50px;
-  margin-bottom: 10vw;
+  margin-top: 2vw; /* Adjusted margin for better spacing on desktop */
+  margin-bottom: 2vw;
   border-radius: 15px;
   background: linear-gradient(180deg, #aa91d6 20%, #89b8e2 80%);
-  padding: 20px;
+  padding: 30px;
   box-sizing: border-box;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-  z-index: 1; /* Ensure the container is on top of the background */
+  z-index: 1;
 }
 
 .top-bar {
   display: flex;
-  flex-direction: column; /* Adjusted to column layout */
-  align-items: center; /* Center items horizontally */
+  flex-direction: column;
+  align-items: center;
   padding-top: 20px;
   box-sizing: border-box;
 }
@@ -70,16 +72,16 @@ body {
 .top-bar input {
   flex: 1;
   max-width: 100%;
-  height: 68px;
+  height: 28px; /* Adjust the height as needed */
   background: #dbe3eb;
   border: none;
   outline: none;
   border-radius: 40px;
   padding-left: 20px;
   color: #626262;
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: 400;
-  margin-top: 10px; /* Adjusted margin */
+  margin-top: 10px;
 }
 
 .search-container {
@@ -97,36 +99,35 @@ body {
   border-radius: 50%;
   cursor: pointer;
   margin-top: .1vw;
-  margin-left: .4vw;
+  margin-left: .7vw;
 }
 
 .weather-image {
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 2vw;
+  margin-bottom: 1vw;
   display: flex;
-  flex-direction: column; /* Adjusted to column layout */
-  align-items: center; /* Center items horizontally */
+  flex-direction: column;
+  align-items: center;
 }
 
 #weather-icon {
-  margin-top: 10px;
-  width: 8vw; /* Adjusted icon size */
-  height: 6vw; /* Adjusted icon size */
+  margin-top: 1vw;
+  width: 8vw;
+  height: 6vw;
 }
 
 .weather-time {
-  /* Additional styles for time display */
   color: white;
-  font-size: 1.5vw; /* Adjust as needed */
+  font-size: 1.8rem; /* Updated font size for better visibility on mobile screens */
   font-weight: 400;
-  margin-top: 10px; /* Adjusted margin */
+  margin-top: 0.5vw; /* Adjusted margin for better positioning on mobile screens */
 }
 
 .weather-temp {
   display: flex;
   justify-content: center;
   color: white;
-  font-size: 3vw; /* Adjust as needed */
+  font-size: 1.5rem; /* Use rem unit for font size */
   font-weight: 400;
 }
 
@@ -134,12 +135,12 @@ body {
   display: flex;
   justify-content: center;
   color: white;
-  font-size: 4vw; /* Adjust as needed */
+  font-size: 1.8rem; /* Use rem unit for font size */
   font-weight: 400;
 }
 
 .data-container {
-  margin-top: 30px;
+  margin-top: 2vw;
   color: white;
   display: flex;
   justify-content: center;
@@ -149,38 +150,89 @@ body {
   margin: auto;
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 1vw;
 }
 
 .data {
-  font-size: 3vw; /* Adjust as needed */
+  font-size: 1.2rem; /* Use rem unit for font size */
   font-weight: 400;
 }
 
 .text {
-  font-size: 1.5vw; /* Adjust as needed */
+  font-size: 1.8rem; /* Use rem unit for font size */
   font-weight: 300;
 }
 
 .icon {
-  margin-top: 1vw; /* Adjust as needed */
+  margin-top: 1vw;
 }
 
 @media (max-width: 600px) {
   .container-wrapper {
-    flex-direction: column; /* Stack containers vertically on small screens */
+    flex-direction: column;
   }
 
-  .container {
-    width: 90vw; /* Adjusted container width for small screens */
-    margin-bottom: 20px; /* Added margin between stacked containers */
+  .top-bar input {
+    font-size: 1rem;
+  }
+
+  .weather-image {
+    width: 100px;
+    height: 85px;
+    margin: 1vw auto 0.5vw; /* Adjusted margin to provide space above the image and reduce the bottom margin */
   }
 
   .weather-temp {
-    font-size: 10vw; /* Adjusted font size for small screens */
+    font-size: 1.2rem; /* Use rem unit for font size */
+    margin-bottom: 0.2vw; /* Adjusted margin to reduce space */
   }
 
   .weather-location {
-    font-size: 8vw; /* Adjusted font size for small screens */
+    font-size: 1.5rem; /* Use rem unit for font size */
+    margin-bottom: 0.2vw; /* Adjusted margin to reduce space */
+  }
+
+  .humidity-percent,
+  .wind-speed,
+  .text {
+    font-size: 1rem; /* Updated font size for mobile screens */
+  }
+
+  .data-container {
+    margin-top: 1vw; /* Adjusted margin for better spacing on mobile screens */
+    display: flex;
+    justify-content: space-between; /* Spread elements horizontally */
+  }
+
+  .element {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically on larger screens */
+    align-items: center; /* Center elements horizontally on larger screens */
+    gap: 0.5vw; /* Adjusted gap for better spacing on larger screens */
+  }
+
+  .data {
+    font-size: 1rem; /* Adjusted font size for mobile screens */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically on mobile */
+    align-items: center;
+  }
+
+  /* Adjust the size of specific icons */
+  #weather-icon{
+    width: 100px; /* Set the size of the icons for mobile screens */
+    height: 80px;
+  }
+  .humidity .icon,
+  .wind .icon {
+    width: 40px; /* Set the size of the icons for mobile screens */
+    height: 40px;
+  }
+
+  /* Adjust the font size of data and text */
+  .humidity-percent,
+  .wind-speed,
+  .text {
+    font-size: 3vw; /* Adjusted font size for mobile screens */
   }
 }
