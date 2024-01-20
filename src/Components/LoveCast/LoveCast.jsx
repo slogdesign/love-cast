@@ -187,7 +187,7 @@ const LoveCast = () => {
           <div>
             <iframe
               width="75%"
-              height="250"
+              height="200"
               src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?si=k7HkDutBMQQyA7Zc"
               title="YouTube video player"
               frameBorder="0"
