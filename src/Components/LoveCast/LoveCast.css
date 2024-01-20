@@ -163,6 +163,19 @@ body {
   font-weight: 300;
 }
 
+.music-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.music-button img {
+  width: 50px; /* Adjust the size of the music icon */
+  height: 50px;
+}
+
 @media (max-width: 600px) {
   .container-wrapper {
     flex-direction: column;

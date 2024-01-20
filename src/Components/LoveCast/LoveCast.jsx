@@ -15,12 +15,15 @@ import wind_icon from '../Assets/wind.png';
 import humidity_icon from '../Assets/humidity.png';
 import cloudy_icon from '../Assets/cloudy.png';
 import logo_icon from '../Assets/logo.png';
+import music_icon from '../Assets/music.png';
 
 const LoveCast = () => {
   let api_key = "04f96754619cfa5f4f575c7e848c226c";
 
   const [isDay, setIsDay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isYouTubeVisible, setIsYouTubeVisible] = useState(false);
 
   const getTimeZone = async (latitude, longitude, timestamp) => {
     const apiKey = "AIzaSyDMADIjGPWmMOlqHM6gXp21XNSOPBtufvg";
@@ -44,7 +47,7 @@ const LoveCast = () => {
       return 0;
     }
 
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
 
     try {
       let response = await fetch(url);
@@ -154,33 +157,48 @@ const LoveCast = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  if (isLoading) {
-    return <LoadingPage />;
-  }
+  const toggleYouTube = () => {
+    setIsYouTubeVisible(!isYouTubeVisible);
+  };
 
   return (
-    <div className="container-wrapper">
-      <div className="container">
-        <div className="top-bar">
-          <div id="weather-time" className="weather-time"></div>
-          <div className="search-container">
-            <input type="text" className="cityInput" placeholder="search" />
-            <div className="search-icon" onClick={search}>
-              <img src={search_icon} alt="" />
+    <div>
+      <div className="container-wrapper">
+        <div className="container">
+          <div className="top-bar">
+            <div id="weather-time" className="weather-time"></div>
+            <div className="search-container">
+              <input type="text" className="cityInput" placeholder="search" />
+              <div className="search-icon" onClick={search}>
+                <img src={search_icon} alt="" />
+              </div>
             </div>
           </div>
+          <div className='weather-image'>
+            <img id="weather-icon" src={cloudy_day_icon} alt="" />
+          </div>
+          <div className='weather-temp'>56°c</div>
+          <div className='weather-location'>Los Angeles</div>
         </div>
-        <div className='weather-image'>
-          <img id="weather-icon" src={cloudy_day_icon} alt="" />
-        </div>
-        <div className='weather-temp'>56°c</div>
-        <div className='weather-location'>Los Angeles</div>
-        {/* Removed data-container */}
       </div>
       <div id="second-container" className="container">
-        {
-          <p style={{ color: '#FFFFFF' }}>Love Cast:</p>
-        }
+        <p style={{ color: '#FFFFFF' }}>Love Cast:</p>
+        {isYouTubeVisible && (
+          <div>
+            <iframe
+              width="75%"
+              height="250"
+              src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?si=k7HkDutBMQQyA7Zc"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
+        <button className="music-button" onClick={toggleYouTube}>
+          <img src={music_icon} alt="Music Icon" />
+        </button>
       </div>
     </div>
   );
