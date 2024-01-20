@@ -18,7 +18,7 @@ html {
     repeat-y, repeat-y, repeat-y, repeat-y,
     repeat-y, repeat-y, repeat-y, repeat-y;
   animation: moveClouds 20s linear infinite;
-  background-size: ;
+  background-size:100% ;
 }
 
 @keyframes moveClouds {
