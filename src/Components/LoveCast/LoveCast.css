@@ -18,6 +18,7 @@ html {
     repeat-y, repeat-y, repeat-y, repeat-y,
     repeat-y, repeat-y, repeat-y, repeat-y;
   animation: moveClouds 20s linear infinite;
+  background-size: ;
 }
 
 @keyframes moveClouds {
@@ -38,10 +39,14 @@ body {
   padding: 0;
 }
 
+.container-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .container {
   position: relative;
-  width: 90vw;
-  max-width: 600px;
+  width: 45%; /* Adjusted container width */
   height: 80vh;
   margin: auto;
   margin-top: 50px;
@@ -53,7 +58,6 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
   z-index: 1; /* Ensure the container is on top of the background */
 }
-
 
 .top-bar {
   display: flex;
@@ -77,11 +81,13 @@ body {
   font-weight: 400;
   margin-top: 10px; /* Adjusted margin */
 }
+
 .search-container {
   display: flex;
   align-items: center;
   width: 100%;
 }
+
 .search-icon {
   display: flex;
   justify-content: center;
@@ -161,15 +167,20 @@ body {
 }
 
 @media (max-width: 600px) {
+  .container-wrapper {
+    flex-direction: column; /* Stack containers vertically on small screens */
+  }
+
   .container {
-    width: 90vw;
+    width: 90vw; /* Adjusted container width for small screens */
+    margin-bottom: 20px; /* Added margin between stacked containers */
   }
 
   .weather-temp {
-    font-size: 10vw; /* Adjust as needed */
+    font-size: 10vw; /* Adjusted font size for small screens */
   }
 
   .weather-location {
-    font-size: 8vw; /* Adjust as needed */
+    font-size: 8vw; /* Adjusted font size for small screens */
   }
 }
