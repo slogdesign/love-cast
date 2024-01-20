@@ -1,12 +1,12 @@
 html {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  height: 100%;
   background-image: 
     url(https://static.radulescu.me/examples/clouds/clouds1000.png), 
     url(https://static.radulescu.me/examples/clouds/clouds1200_1.png), 
     url(https://static.radulescu.me/examples/clouds/clouds1000_blur3.png), 
-    linear-gradient(to bottom, #007ced 1%, #cce7ff 100%),
+    linear-gradient(to bottom, #ec95e1 1%, #cce7ff 100%),
     url(https://static.radulescu.me/examples/clouds/clouds1000.png), 
     url(https://static.radulescu.me/examples/clouds/clouds1200_1.png), 
     url(https://static.radulescu.me/examples/clouds/clouds1000_blur3.png), 
@@ -15,8 +15,8 @@ html {
     0 200px, 0 400px, 0 600px, 0 0,
     1000px 200px, 1200px 400px, 1100px 600px, 0 0;
   background-repeat: 
-    repeat-y, repeat-y, repeat-y, no-repeat,
-    repeat-y, repeat-y, repeat-y, no-repeat;
+    repeat-y, repeat-y, repeat-y, repeat-y,
+    repeat-y, repeat-y, repeat-y, repeat-y;
   animation: moveClouds 20s linear infinite;
 }
 
