@@ -1,16 +1,59 @@
+html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-image: 
+    url(https://static.radulescu.me/examples/clouds/clouds1000.png), 
+    url(https://static.radulescu.me/examples/clouds/clouds1200_1.png), 
+    url(https://static.radulescu.me/examples/clouds/clouds1000_blur3.png), 
+    linear-gradient(to bottom, #007ced 1%, #cce7ff 100%),
+    url(https://static.radulescu.me/examples/clouds/clouds1000.png), 
+    url(https://static.radulescu.me/examples/clouds/clouds1200_1.png), 
+    url(https://static.radulescu.me/examples/clouds/clouds1000_blur3.png), 
+    linear-gradient(to bottom, #007ced 1%, #cce7ff 100%);
+  background-position: 
+    0 200px, 0 400px, 0 600px, 0 0,
+    1000px 200px, 1200px 400px, 1100px 600px, 0 0;
+  background-repeat: 
+    repeat-y, repeat-y, repeat-y, no-repeat,
+    repeat-y, repeat-y, repeat-y, no-repeat;
+  animation: moveClouds 20s linear infinite;
+}
+
+@keyframes moveClouds {
+  0% {
+    background-position: 
+      0 200px, 0 400px, 0 600px, 0 0,
+      0 200px, 0 400px, 0 600px, 0 0;
+  }
+  100% {
+    background-position: 
+      1000px 200px, 1200px 400px, 1100px 600px, 0 0,
+      2000px 200px, 2200px 400px, 2100px 600px, 0 0;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .container {
+  position: relative;
   width: 90vw;
   max-width: 600px;
-  height: 80vh; /* Adjust as needed */
+  height: 80vh;
   margin: auto;
   margin-top: 50px;
-  margin-bottom: 10vw; /* Adjust the value as needed */
+  margin-bottom: 10vw;
   border-radius: 15px;
-  background-image: linear-gradient(180deg, #aa91d6 20%, #89b8e2 80%);
+  background: linear-gradient(180deg, #aa91d6 20%, #89b8e2 80%);
   padding: 20px;
   box-sizing: border-box;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  z-index: 1; /* Ensure the container is on top of the background */
 }
+
 
 .top-bar {
   display: flex;

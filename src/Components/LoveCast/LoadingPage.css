@@ -1,30 +1,63 @@
 .loading-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  #cloud-intro {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://static.radulescu.me/examples/clouds/clouds1000.png),
+                      url(https://static.radulescu.me/examples/clouds/clouds1200_1.png),
+                      url(https://static.radulescu.me/examples/clouds/clouds1000_blur3.png),
+                      linear-gradient(to bottom, #aa91d6 20%, #89b8e2 80%);
+    background-position: 0 200px, 0 300px, 100px 250px, 0 0;
+    background-repeat: repeat-y, repeat-y, repeat-y, no-repeat;
+    animation: wind 20s linear infinite;
+    z-index: -1; /* Set a lower z-index to place it behind the content */
+  }
+  
+  .content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background: linear-gradient(180deg, #aa91d6 20%, #89b8e2 80%); 
-    
+    height: 100%;
+    position: relative; /* Ensure z-index works */
+    z-index: 1; /* Place above the background */
   }
   
+  /* Your existing styles */
   .logo {
-    width: 250px; /* Adjusted logo size */
-    height: 200px; /* Adjusted logo size */
-    margin-bottom: 20px; /* Adjusted margin as needed */
+    width: 250px;
+    height: 200px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: .5vw;
-    
   }
+  
   h1 {
-    font-size: 24px; /* Adjusted font size */
-    margin-bottom: 10px; /* Adjusted margin as needed */
+    font-size: 45px;
+    margin-bottom: 10px;
+    font-family: "Rubik Bubbles", system-ui;
+  font-weight: 400;
+  color: #6747a3;
   }
   
   p {
-    font-size: 16px; /* Adjusted font size */
-    color: #555; /* Adjusted text color as needed */
+    font-size: 16px;
+    color: #555;
+  }
+  
+  @keyframes wind {
+    0% {
+      background-position: 0 200px, 0 300px, 100px 250px, 0 0;
+    }
+    100% {
+      background-position: 1000px 200px, 1200px 300px, 1100px 250px, 0 0;
+    }
   }
   
