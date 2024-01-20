@@ -1,0 +1,29 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(180deg, #aa91d6 20%, #89b8e2 80%); 
+    
+  }
+  
+  .logo {
+    width: 250px; /* Adjusted logo size */
+    height: 200px; /* Adjusted logo size */
+    margin-bottom: 20px; /* Adjusted margin as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  h1 {
+    font-size: 24px; /* Adjusted font size */
+    margin-bottom: 10px; /* Adjusted margin as needed */
+  }
+  
+  p {
+    font-size: 16px; /* Adjusted font size */
+    color: #555; /* Adjusted text color as needed */
+  }
+  
