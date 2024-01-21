@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './LoveCast.css';
 import LoadingPage from './LoadingPage';
+import YouTube from 'react-youtube';
 
 import search_icon from '../Assets/search.png';
 import cloudy_day_icon from '../Assets/cloudy_day.png';
@@ -23,7 +24,7 @@ const LoveCast = () => {
   const [isDay, setIsDay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isYouTubeVisible, setIsYouTubeVisible] = useState(false);
+  const [player, setPlayer] = useState(null);
 
   const getTimeZone = async (latitude, longitude, timestamp) => {
     const apiKey = "AIzaSyDMADIjGPWmMOlqHM6gXp21XNSOPBtufvg";
@@ -157,8 +158,17 @@ const LoveCast = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  const toggleYouTube = () => {
-    setIsYouTubeVisible(!isYouTubeVisible);
+  const playMusic = () => {
+    if (player) {
+      // Toggle play/pause
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+      // Update isPlaying state
+      setIsPlaying(!isPlaying);
+    }
   };
 
   return (
@@ -183,22 +193,33 @@ const LoveCast = () => {
       </div>
       <div id="second-container" className="container">
         <p style={{ color: '#FFFFFF' }}>Love Cast:</p>
-        {isYouTubeVisible && (
-          <div>
-            <iframe
-              width="75%"
-              height="200"
-              src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?si=k7HkDutBMQQyA7Zc"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
-        )}
-        <button className="music-button" onClick={toggleYouTube}>
-          <img src={music_icon} alt="Music Icon" />
-        </button>
+        <YouTube
+          videoId="jfKfPfyJRdk"
+          opts={{
+            width: '560',
+            height: '315',
+            playerVars: {
+              autoplay: 0,
+              controls: 0,
+              showinfo: 0,
+              modestbranding: 1,
+              loop: 1,
+              origin: window.location.origin,
+            },
+          }}
+          onReady={(event) => {
+            event.target.setPlaybackQuality('hd1080'); // Set the playback quality if needed
+            event.target.playVideo(); // Play the video on ready
+            setPlayer(event.target);
+          }}
+          className="youtube-player"
+          style={{ display: 'none' }} // Add this line to hide the player
+        />
+        <div className="button-container">
+          <button className="music-button" onClick={playMusic}>
+            <img src={music_icon} alt="Music Icon" />
+          </button>
+        </div>
       </div>
     </div>
   );
