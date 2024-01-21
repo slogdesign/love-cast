@@ -83,16 +83,20 @@ const LoveCast = () => {
     if (!timeZoneData) {
       return true; // Default to day if time zone data is not available
     }
-
+  
     const currentTime = new Date().getTime() / 1000;
     const sunsetTime = timeZoneData.dstOffset + timeZoneData.rawOffset + timeZoneData.sunset;
     const sunriseTime = timeZoneData.dstOffset + timeZoneData.rawOffset + timeZoneData.sunrise;
-
+  
+    console.log("Current Time:", currentTime);
+    console.log("Sunset Time:", sunsetTime);
+    console.log("Sunrise Time:", sunriseTime);
+  
     // Check if it's day or night based on the current time and sunset/sunrise times
     return currentTime >= sunriseTime && currentTime <= sunsetTime;
   };
 
-  const getWeatherIcon = (weatherCondition) => {
+  const getWeatherIcon = (weatherCondition, isDay) => {
     const iconMapping = {
       'Clear Day': sunny_icon,
       'Clear Night': night_icon,
@@ -112,8 +116,10 @@ const LoveCast = () => {
       'Squall': windy_icon,
       'Tornado': windy_icon,
     };
-
-    return iconMapping[weatherCondition] || (isDay ? sunny_icon : night_icon);
+    const dayNightCondition = isDay ? 'Day' : 'Night';
+    const combinedCondition = `${weatherCondition} ${dayNightCondition}`;
+  
+    return iconMapping[combinedCondition] || (isDay ? sunny_icon : night_icon);
   };
 
   const displayTime = (timeZoneData) => {
