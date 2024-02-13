@@ -4,27 +4,24 @@ import LoadingPage from './LoadingPage';
 import YouTube from 'react-youtube';
 
 import search_icon from '../Assets/search.png';
-import cloudy_day_icon from '../Assets/cloudy_day.png';
-import cloudy_night_icon from '../Assets/cloudy_night.png';
+import cloudy_day_icon from '../Assets/cloudy_day.png'; 
+import cloudy_night_icon from '../Assets/cloudy_night.png'; 
 import night_icon from '../Assets/night.png';
 import rain_icon from '../Assets/rain.png';
 import snow_icon from '../Assets/snow.png';
 import sunny_icon from '../Assets/sunny.png';
 import thunder_icon from '../Assets/thunder.png';
-import windy_icon from '../Assets/windy.png';
-import wind_icon from '../Assets/wind.png';
-import humidity_icon from '../Assets/humidity.png';
-import cloudy_icon from '../Assets/cloudy.png';
-import logo_icon from '../Assets/logo.png';
 import music_icon from '../Assets/music.png';
+import photo_icon from '../Assets/photo.png';
+import logo_icon from '../Assets/logo.png';
+
 
 const LoveCast = () => {
   let api_key = "04f96754619cfa5f4f575c7e848c226c";
-
-  const [isDay, setIsDay] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [player, setPlayer] = useState(null);
+  const [wicon, setWicon] = useState(logo_icon);
 
   const getTimeZone = async (latitude, longitude, timestamp) => {
     const apiKey = "AIzaSyDMADIjGPWmMOlqHM6gXp21XNSOPBtufvg";
@@ -44,82 +41,66 @@ const LoveCast = () => {
   const search = async () => {
     const element = document.getElementsByClassName("cityInput");
     if (element[0].value === "") {
-      console.error("No city entered.");
       return 0;
     }
-
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
-
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${element[0].value}&units=Metric&appid=${api_key}`;
     try {
       let response = await fetch(url);
       let data = await response.json();
-      console.log("API Response:", data);
-
+      console.log(data.weather[0].icon);
       const temperature = document.getElementsByClassName("weather-temp");
       const location = document.getElementsByClassName("weather-location");
+      const timestamp = data.dt;
+      const timeZoneData = await getTimeZone(
+        data.coord.lat,
+        data.coord.lon,
+        timestamp
+      );
+
+      displayTime(timeZoneData);
 
       temperature[0].innerHTML = data.main.temp + "°c";
       location[0].innerHTML = data.name;
 
-      const weatherCondition = data.weather[0].main;
-      const timestamp = data.dt;
-      const timeZoneData = await getTimeZone(data.coord.lat, data.coord.lon, timestamp);
-
-      // Check if it's day or night based on the fetched time zone data
-      setIsDay(isDayTime(timeZoneData));
-
-      // Get weather condition and set the weather icon dynamically
-      const weatherIcon = getWeatherIcon(weatherCondition);
-      document.getElementById("weather-icon").src = weatherIcon;
-
-      // Display time above the search bar
-      displayTime(timeZoneData);
+      switch (data.weather[0].icon) {
+        case "01d":
+          setWicon(sunny_icon);
+          break;
+        case "01n":
+          setWicon(night_icon);
+          break;
+        case "02d":
+          setWicon(cloudy_day_icon);
+          break;
+        case "02n":
+          setWicon(cloudy_night_icon);
+          break;
+        case "03d":
+          setWicon(cloudy_day_icon);
+          break;
+        case "03n":
+          setWicon(cloudy_night_icon);
+          break;
+        case "09d":
+        case "09n":
+        case "10d":
+        case "10n":
+          setWicon(rain_icon);
+          break;
+        case "11d":
+        case "11n":
+          setWicon(thunder_icon);
+          break;
+        case "13d":
+        case "13n":
+          setWicon(snow_icon);
+          break;
+        default:
+          setWicon(sunny_icon);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
-
-  const isDayTime = (timeZoneData) => {
-    if (!timeZoneData) {
-      return true; // Default to day if time zone data is not available
-    }
-  
-    const currentTime = new Date().getTime() / 1000;
-    const sunsetTime = timeZoneData.dstOffset + timeZoneData.rawOffset + timeZoneData.sunset;
-    const sunriseTime = timeZoneData.dstOffset + timeZoneData.rawOffset + timeZoneData.sunrise;
-  
-    console.log("Current Time:", currentTime);
-    console.log("Sunset Time:", sunsetTime);
-    console.log("Sunrise Time:", sunriseTime);
-  
-    // Check if it's day or night based on the current time and sunset/sunrise times
-    return currentTime >= sunriseTime && currentTime <= sunsetTime;
-  };
-
-  const getWeatherIcon = (weatherCondition, isDay) => {
-    const iconMapping = {
-      'Clear Day': sunny_icon,
-      'Clear Night': night_icon,
-      'Cloudy Day': cloudy_day_icon,
-      'Cloudy Night': cloudy_night_icon,
-      'Snow': snow_icon,
-      'Rain': rain_icon,
-      'Drizzle': rain_icon,
-      'Thunderstorm': thunder_icon,
-      'Mist': cloudy_icon,
-      'Fog': cloudy_icon,
-      'Smoke': cloudy_icon,
-      'Haze': cloudy_icon,
-      'Dust': cloudy_icon,
-      'Sand': cloudy_icon,
-      'Ash': cloudy_icon,
-      'Squall': windy_icon,
-      'Tornado': windy_icon,
-    };
-    const dayNightCondition = isDay ? 'Day' : 'Night';
-    const combinedCondition = `${weatherCondition} ${dayNightCondition}`;
-  
-    return iconMapping[combinedCondition] || (isDay ? sunny_icon : night_icon);
   };
 
   const displayTime = (timeZoneData) => {
@@ -135,28 +116,7 @@ const LoveCast = () => {
     }
   };
 
-  const getUserLocation = () => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-
-          console.log("User's Location:", latitude, longitude);
-
-          // Use latitude and longitude to fetch weather data or any other functionality
-        },
-        (error) => {
-          console.error("Error getting geolocation:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by your browser.");
-    }
-  };
-
   useEffect(() => {
-    // Simulate loading time (change the timeout duration to 10000 for 10 seconds)
     const timeout = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
@@ -166,67 +126,78 @@ const LoveCast = () => {
 
   const playMusic = () => {
     if (player) {
-      // Toggle play/pause
       if (isPlaying) {
         player.pauseVideo();
       } else {
         player.playVideo();
       }
-      // Update isPlaying state
       setIsPlaying(!isPlaying);
     }
   };
 
+  const handlePhotoButtonClick = () => {
+    // Handle the logic for photo button click
+  };
+
   return (
     <div>
-      <div className="container-wrapper">
-        <div className="container">
-          <div className="top-bar">
-            <div id="weather-time" className="weather-time"></div>
-            <div className="search-container">
-              <input type="text" className="cityInput" placeholder="search" />
-              <div className="search-icon" onClick={search}>
-                <img src={search_icon} alt="" />
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <div>
+          <div className="container-wrapper">
+            <div className="container">
+              <div className="top-bar">
+                <div id="weather-time" className="weather-time"></div>
+                <div className="search-container">
+                  <input type="text" className="cityInput" placeholder="search" />
+                  <div className="search-icon" onClick={search}>
+                    <img src={search_icon} alt="" />
+                  </div>
+                </div>
               </div>
+              <div className='weather-image'>
+                <img id="weather-icon" src={wicon} alt="" />
+              </div>
+              <div className='weather-temp'>cha x luna</div>
+              <div className='weather-location'>i ♡ u</div>
             </div>
           </div>
-          <div className='weather-image'>
-            <img id="weather-icon" src={cloudy_day_icon} alt="" />
+          <div id="second-container" className="container">
+            <p style={{ color: '#FFFFFF' }}>Love Cast:</p>
+            <YouTube
+              videoId="jfKfPfyJRdk"
+              opts={{
+                width: '560',
+                height: '315',
+                playerVars: {
+                  autoplay: 0,
+                  controls: 0,
+                  showinfo: 0,
+                  modestbranding: 1,
+                  loop: 1,
+                  origin: window.location.origin,
+                },
+              }}
+              onReady={(event) => {
+                event.target.setPlaybackQuality('hd1080');
+                event.target.playVideo();
+                setPlayer(event.target);
+              }}
+              className="youtube-player"
+              style={{ display: 'none' }}
+            />
+            <div className="button-container">
+              <button className="music-button" onClick={playMusic}>
+                <img src={music_icon} alt="Music Icon" />
+              </button>
+              <button className="photo-button" onClick={handlePhotoButtonClick}>
+                <img src={photo_icon} alt="Photos Icon" />
+              </button>
+            </div>
           </div>
-          <div className='weather-temp'>56°c</div>
-          <div className='weather-location'>Los Angeles</div>
         </div>
-      </div>
-      <div id="second-container" className="container">
-        <p style={{ color: '#FFFFFF' }}>Love Cast:</p>
-        <YouTube
-          videoId="jfKfPfyJRdk"
-          opts={{
-            width: '560',
-            height: '315',
-            playerVars: {
-              autoplay: 0,
-              controls: 0,
-              showinfo: 0,
-              modestbranding: 1,
-              loop: 1,
-              origin: window.location.origin,
-            },
-          }}
-          onReady={(event) => {
-            event.target.setPlaybackQuality('hd1080'); // Set the playback quality if needed
-            event.target.playVideo(); // Play the video on ready
-            setPlayer(event.target);
-          }}
-          className="youtube-player"
-          style={{ display: 'none' }} // Add this line to hide the player
-        />
-        <div className="button-container">
-          <button className="music-button" onClick={playMusic}>
-            <img src={music_icon} alt="Music Icon" />
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

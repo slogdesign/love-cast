@@ -112,8 +112,8 @@ body {
 
 #weather-icon {
   margin-top: 1vw;
-  width: 8vw;
-  height: 6vw;
+  width: 10vw;
+  height: 8vw;
 }
 
 .weather-time {
@@ -127,7 +127,7 @@ body {
   display: flex;
   justify-content: center;
   color: white;
-  font-size: 1.5rem; /* Use rem unit for font size */
+  font-size: 1rem; /* Use rem unit for font size */
   font-weight: 400;
 }
 
@@ -163,16 +163,24 @@ body {
   font-weight: 300;
 }
 
-.music-button {
+.button-container {
+  display: flex;
+  justify-content: center; /* Adjusted to space-between */
+}
+
+.music-button,
+.photo-button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  margin-top: 1rem;
+}
+.music-button{
+  margin-right: 1.5em;
 }
 
-.music-button img {
-  width: 50px; /* Adjust the size of the music icon */
+.music-button img,
+.photo-button img {
+  width: 50px;
   height: 50px;
 }
 
